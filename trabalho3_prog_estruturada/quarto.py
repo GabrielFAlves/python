@@ -1,3 +1,4 @@
+# funçao para saber se digitou entre 0 e 5 inclusive
 def obter_clube_preferencia():
     print("Clubes de futebol:")
     print("1 - Flamengo")
@@ -13,7 +14,7 @@ def obter_clube_preferencia():
         else:
             print("Opção inválida!")
 
-
+# funçao para saber se o slário é >=0
 def obter_salario():
     while True:
         salario = float(input("Digite o salário: "))
@@ -22,7 +23,7 @@ def obter_salario():
         else:
             print("Salário inválido!")
 
-
+# função para saber a cidade natal
 def obter_cidade_natal():
     print("Cidades:")
     print("1 - Niterói")
@@ -35,7 +36,7 @@ def obter_cidade_natal():
         else:
             print("Opção inválida!")
 
-
+# dicionários
 # Inicialização das variáveis
 torcedores_por_clube = {
     1: 0,  # Flamengo
@@ -70,6 +71,7 @@ while True:
     if cidade_natal == 1 and clube_preferencia not in [1, 2, 3, 4]:
         nascidos_em_niteroi_sem_clube += 1
 
+# clube é a chave / salarios é o valor
 # Cálculo das médias salariais
 medias_salariais = {}
 for clube, salarios in salario_por_clube.items():

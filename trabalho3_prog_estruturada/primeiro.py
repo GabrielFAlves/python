@@ -1,3 +1,4 @@
+# função para saber se é ano bixesto
 def eh_ano_bissexto(ano):
     if ano % 4 == 0:
         if ano % 100 == 0:

@@ -7,7 +7,7 @@ vetor = [random.randint(0, 20) for _ in range(10)]
 print("Vetor original:", vetor)
 
 # Manipulando os valores do vetor
-for i in range(1, 10):
+for i in range(0, 10):
     vetor[i] += sum(vetor[:i])
 
 # Imprimindo o vetor manipulado
