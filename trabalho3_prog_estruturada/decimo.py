@@ -18,12 +18,14 @@ vendas = {
 total_arrecadado = 0
 total_compras = 0
 
+# função para exibir o menu
 def exibir_menu():
     print("Menu de Preços:")
     for codigo, preco in tabela_precos.items():
         produto = obter_nome_produto(codigo)
         print(codigo + " - " + produto + ": R$" + str(preco))
 
+# funçao para obter o nome do produto
 def obter_nome_produto(codigo):
     if codigo == 'A':
         return "Refrigerante"
@@ -36,6 +38,7 @@ def obter_nome_produto(codigo):
     elif codigo == 'E':
         return "Banana Split"
 
+# funçao para processar a venda
 def processar_venda():
     venda = {}
     while True:
@@ -52,6 +55,7 @@ def processar_venda():
 
     return venda
 
+# unção para emetir o ralatorio
 def emitir_relatorio():
     print("Relatório de Vendas do Dia:")
     for codigo, dados_venda in vendas.items():
