@@ -1,60 +1,59 @@
-# função para saber se é ano bixesto
-def eh_ano_bissexto(ano):
-    if ano % 4 == 0:
-        if ano % 100 == 0:
-            if ano % 400 == 0:
-                return True
-            else:
-                return False
-        else:
-            return True
+def is_leap_year(year):
+    """Verifica se um ano é bissexto."""
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+def days_in_month(year, month):
+    """Retorna o número de dias em um determinado mês."""
+    if month == 2:
+        return 29 if is_leap_year(year) else 28
+    elif month in [4, 6, 9, 11]:
+        return 30
     else:
-        return False
+        return 31
 
+def date_difference(start_date, end_date):
+    """Calcula o número de dias entre duas datas."""
+    start_year, start_month, start_day = start_date
+    end_year, end_month, end_day = end_date
 
-def dias_entre_datas(data_inicial, data_final):
-    dia_inicial, mes_inicial, ano_inicial = data_inicial
-    dia_final, mes_final, ano_final = data_final
+    days = 0
 
-    dias_por_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    while start_date != end_date:
+        days += 1
+        start_day += 1
 
-    if ano_inicial == ano_final:
-        dias = sum(dias_por_mes[mes_inicial - 1:mes_final - 1])
-        if eh_ano_bissexto(ano_inicial) and mes_inicial <= 2 <= mes_final:
-            dias += 1
-    else:
-        dias = sum(dias_por_mes[mes_inicial - 1:])
-        if eh_ano_bissexto(ano_inicial) and mes_inicial <= 2:
-            dias += 1
+        if start_day > days_in_month(start_year, start_month):
+            start_day = 1
+            start_month += 1
 
-        for ano in range(ano_inicial + 1, ano_final):
-            if eh_ano_bissexto(ano):
-                dias += 366
-            else:
-                dias += 365
+            if start_month > 12:
+                start_month = 1
+                start_year += 1
 
-        if eh_ano_bissexto(ano_final) and mes_final >= 3:
-            dias += 1
-        dias += sum(dias_por_mes[:mes_final - 1])
+        start_date = (start_year, start_month, start_day)
 
-    return dias
+    return days
 
+# Função principal
+def main():
+    while True:
+        start_year = int(input("Digite o ano da primeira data (4 dígitos): "))
+        if start_year == 0:
+            break
 
-def obter_data():
-    data_str = input("Digite a data (dd/mm/aaaa): ")
-    dia, mes, ano = map(int, data_str.split('/'))
-    return dia, mes, ano
+        start_month = int(input("Digite o mês da primeira data: "))
+        start_day = int(input("Digite o dia da primeira data: "))
 
+        end_year = int(input("Digite o ano da segunda data (4 dígitos): "))
+        end_month = int(input("Digite o mês da segunda data: "))
+        end_day = int(input("Digite o dia da segunda data: "))
 
-# Programa principal
-while True:
-    data_inicial = obter_data()
-    if data_inicial == (0, 0, 0):
-        break
+        start_date = (start_year, start_month, start_day)
+        end_date = (end_year, end_month, end_day)
 
-    data_final = obter_data()
-    if data_final == (0, 0, 0):
-        break
+        days = date_difference(start_date, end_date)
+        print("Número de dias corridos:", days)
+        print()
 
-    dias = dias_entre_datas(data_inicial, data_final)
-    print("Número de dias corridos:", dias)
+if __name__ == "__main__":
+    main()
