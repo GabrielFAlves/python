@@ -2,7 +2,7 @@
 signos = ['Macaco', 'Galo', 'Cão', 'Porco', 'Rato', 'Boi', 'Tigre', 'Coelho', 'Dragão', 'Serpente', 'Cavalo', 'Carneiro']
 
 # Lista com as datas de aniversário dos membros da família
-datas_aniversario = [1990, 1985, 2002, 1998]  
+datas_aniversario = [1957, 1999, 2003, 1998]  
 
 # Mostrar o signo de cada membro da família
 # signo chines começou em 1900

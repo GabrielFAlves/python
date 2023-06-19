@@ -1,60 +1,50 @@
-# função para saber se é ano bixesto
-def eh_ano_bissexto(ano):
-    if ano % 4 == 0:
-        if ano % 100 == 0:
-            if ano % 400 == 0:
-                return True
-            else:
-                return False
-        else:
-            return True
+def ano_bissexto(ano):
+    """Verifica se um ano é bissexto."""
+    return ano % 4 == 0 and (ano % 100 != 0 or ano % 400 == 0)
+
+def dia_mes(ano, mes):
+    """Retorna o número de dias em um determinado mês."""
+    if mes == 2:
+        return 29 if ano_bissexto(ano) else 28
+    elif mes in [4, 6, 9, 11]:
+        return 30
     else:
-        return False
+        return 31
 
+def diferenca_data(data_inicio, data_fim):
+    """Calcula o número de dias entre duas datas."""
+    ano_inicio, mes_inicio, dia_inicio = data_inicio
+    ano_fim, mes_fim, dia_fim = data_fim
 
-def dias_entre_datas(data_inicial, data_final):
-    dia_inicial, mes_inicial, ano_inicial = data_inicial
-    dia_final, mes_final, ano_final = data_final
+    dias = 0
 
-    dias_por_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    while data_inicio != data_fim:
+        dias += 1
+        dia_inicio += 1
 
-    if ano_inicial == ano_final:
-        dias = sum(dias_por_mes[mes_inicial - 1:mes_final - 1])
-        if eh_ano_bissexto(ano_inicial) and mes_inicial <= 2 <= mes_final:
-            dias += 1
-    else:
-        dias = sum(dias_por_mes[mes_inicial - 1:])
-        if eh_ano_bissexto(ano_inicial) and mes_inicial <= 2:
-            dias += 1
+        if dia_inicio > dia_mes(ano_inicio, mes_inicio):
+            dia_inicio = 1
+            mes_inicio += 1
 
-        for ano in range(ano_inicial + 1, ano_final):
-            if eh_ano_bissexto(ano):
-                dias += 366
-            else:
-                dias += 365
+            if mes_inicio > 12:
+                mes_inicio = 1
+                ano_inicio += 1
 
-        if eh_ano_bissexto(ano_final) and mes_final >= 3:
-            dias += 1
-        dias += sum(dias_por_mes[:mes_final - 1])
+        data_inicio = (ano_inicio, mes_inicio, dia_inicio)
 
     return dias
 
+# Função principal
+ano_inicio = int(input("Digite o ano da primeira data (4 dígitos): "))
+mes_inicio = int(input("Digite o mês da primeira data: "))
+dia_inicio = int(input("Digite o dia da primeira data: "))
 
-def obter_data():
-    data_str = input("Digite a data (dd/mm/aaaa): ")
-    dia, mes, ano = map(int, data_str.split('/'))
-    return dia, mes, ano
+ano_fim = int(input("Digite o ano da segunda data (4 dígitos): "))
+mes_fim = int(input("Digite o mês da segunda data: "))
+dia_fim = int(input("Digite o dia da segunda data: "))
 
+data_inicio = (ano_inicio, mes_inicio, dia_inicio)
+data_fim = (ano_fim, mes_fim, dia_fim)
 
-# Programa principal
-while True:
-    data_inicial = obter_data()
-    if data_inicial == (0, 0, 0):
-        break
-
-    data_final = obter_data()
-    if data_final == (0, 0, 0):
-        break
-
-    dias = dias_entre_datas(data_inicial, data_final)
-    print("Número de dias corridos:", dias)
+dias = diferenca_data(data_inicio, data_fim)
+print("Número de dias corridos:", dias)

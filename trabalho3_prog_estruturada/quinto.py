@@ -1,40 +1,39 @@
-# Lista de jogos e faltas
-lista_jogos = [
-    [['Brasil', 'Italia', [10, 9]]],
-    [['Brasil', 'Espanha', [5, 7]], ['Italia', 'Espanha', [7, 8]]]
-]
+def calcular_total_faltas(lista):
+    total_faltas = 0
+    faltas_por_time = {}
 
-# Dicionário para armazenar as faltas por time
-faltas_por_time = {}
+    for jogo in lista:
+        time1, time2 = jogo[0]
+        faltas = jogo[1]
 
-# Percorrer a lista de jogos e faltas
-for jogos in lista_jogos:
-    for jogo in jogos:
-        time1 = jogo[0]
-        time2 = jogo[1]
-        faltas_time1, faltas_time2 = jogo[2]
+        total_faltas += faltas[0] + faltas[1]
 
-        # Atualizar o dicionário de faltas por time
         if time1 in faltas_por_time:
-            faltas_por_time[time1] += faltas_time1
+            faltas_por_time[time1] += faltas[0]
         else:
-            faltas_por_time[time1] = faltas_time1
+            faltas_por_time[time1] = faltas[0]
 
         if time2 in faltas_por_time:
-            faltas_por_time[time2] += faltas_time2
+            faltas_por_time[time2] += faltas[1]
         else:
-            faltas_por_time[time2] = faltas_time2
+            faltas_por_time[time2] = faltas[1]
 
-# Encontrar o total de faltas do campeonato
-total_faltas = sum(faltas_por_time.values())
+    return total_faltas, faltas_por_time
 
-# Encontrar o time com mais faltas
-time_com_mais_faltas = max(faltas_por_time, key=faltas_por_time.get)
+# Lista de jogos
+jogos = [
+    [['Brasil', 'Italia'], [10, 9]],
+    [['Brasil', 'Espanha'], [5, 7]],
+    [['Italia', 'Espanha'], [7, 8]]
+]
 
-# Encontrar o time com menos faltas
-time_com_menos_faltas = min(faltas_por_time, key=faltas_por_time.get)
+total_faltas, faltas_por_time = calcular_total_faltas(jogos)
 
-# Exibir resultados
+time_menos_faltas = min(faltas_por_time, key=faltas_por_time.get)
+if 'Brasil' in faltas_por_time and 'Espanha' in faltas_por_time:
+    if faltas_por_time['Brasil'] == faltas_por_time['Espanha']:
+        time_menos_faltas = 'Brasil, Espanha'
+
 print("Total de faltas do campeonato:", total_faltas)
-print("Time com mais faltas:", time_com_mais_faltas)
-print("Time com menos faltas:", time_com_menos_faltas)
+print("Time que fez mais faltas:", max(faltas_por_time, key=faltas_por_time.get))
+print("Time que fez menos faltas:", time_menos_faltas)
